@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "notice")
-public class Notice {
+public class Notice extends BaseEntity{
 
 	@Id
 	@GeneratedValue

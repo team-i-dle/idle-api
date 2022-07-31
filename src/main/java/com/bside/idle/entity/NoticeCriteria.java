@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "notice_criteria")
-public class NoticeCriteria {
+public class NoticeCriteria extends BaseEntity{
 
 	@Id
 	@GeneratedValue

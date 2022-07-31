@@ -17,8 +17,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "member")
-public class Member {
+@Table(name = "members")
+public class Member extends BaseEntity{
 
 	@Id
 	@GeneratedValue

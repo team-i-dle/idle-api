@@ -13,12 +13,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "default_criteria")
-public class DefaultCriteria {
+public class DefaultCriteria extends BaseEntity{
 
 	@Id
 	@GeneratedValue
 	@Column(name = "default_criteria_id")
 	private Long id;
-
 	private String criteriaName;
 }
