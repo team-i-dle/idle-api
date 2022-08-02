@@ -1,7 +1,9 @@
 package com.bside.idle.common;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class ApiResponse<T> {
 
@@ -14,6 +16,6 @@ public class ApiResponse<T> {
 	}
 
 	public static <T> ApiResponse<T> createError(T data){
-		return new ApiResponse<>(true, null, data);
+		return new ApiResponse<>(false, null, data);
 	}
 }
