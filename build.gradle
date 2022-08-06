@@ -44,5 +44,5 @@ tasks.named('test') {
 }
 
 bootJar{
-	mainClassName= 'com.bside.idle.IdleApplication'
+	mainClass = 'com.bside.idle.IdleApplication'
 }
