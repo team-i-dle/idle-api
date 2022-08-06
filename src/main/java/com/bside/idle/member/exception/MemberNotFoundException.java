@@ -1,6 +1,6 @@
-package com.bside.idle.exception;
+package com.bside.idle.member.exception;
 
-public class MemberNotFoundException extends RuntimeException{
+public class MemberNotFoundException extends RuntimeException {
 
 	public MemberNotFoundException() {
 	}

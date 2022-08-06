@@ -22,11 +22,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "member_criteria")
-public class MemberCriteria extends BaseEntity{
+public class MemberCriteria extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="member_criteria_id")
+	@Column(name = "member_criteria_id")
 	private Long id;
 
 	private String criteriaName;

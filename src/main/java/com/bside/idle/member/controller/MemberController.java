@@ -1,9 +1,6 @@
 package com.bside.idle.member.controller;
 
-import static java.util.stream.Collectors.*;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bside.idle.common.ApiResponse;
 import com.bside.idle.common.ErrorResponse;
-import com.bside.idle.entity.Member;
-import com.bside.idle.exception.MemberNotFoundException;
-import com.bside.idle.member.repository.MemberRepository;
+import com.bside.idle.entity.Notice;
+import com.bside.idle.member.exception.MemberNotFoundException;
 import com.bside.idle.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,9 +33,23 @@ public class MemberController {
 	}
 
 	@GetMapping("/{memberId}/keyword")
-	public ResponseEntity<ApiResponse<List<String>>> getKeywordList(@PathVariable Long memberId) {
+	public ResponseEntity<ApiResponse<List<String>>> getKeywordList(@PathVariable("memberId") Long memberId) {
 		List<String> criteria = memberService.getKeywordList(memberId);
 		ApiResponse<List<String>> body = ApiResponse.createSuccess(criteria);
+		return ResponseEntity.ok(body);
+	}
+
+	@GetMapping("/{memberId}/notice")
+	public ResponseEntity<ApiResponse<String>> listNotice(@PathVariable("memberId") Long memberId) {
+
+		List<Notice> notices = memberService.listNotice(memberId);
+
+		notices.forEach(n -> {
+			n.getMember().getMemberCriteria().forEach(mc -> mc.getCriteriaName());
+			n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName());
+		});
+
+		ApiResponse<String> body = ApiResponse.createSuccess("개발중");
 		return ResponseEntity.ok(body);
 	}
 
