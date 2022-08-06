@@ -9,5 +9,6 @@ spring:
     show_sql: true
   session:
     store-type: jdbc
-  profiles:
-    include: oauth
+#  profiles:
+#    include: oauth
+
