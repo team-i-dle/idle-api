@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bside.idle.entity.Member;
 import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.entity.Notice;
-import com.bside.idle.exception.MemberNotFoundException;
+import com.bside.idle.member.exception.MemberNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,11 +48,37 @@ class MemberRepositoryTest {
 	}
 
 	@Test
+	@DisplayName("N + 1 테스트")
+	void test1() {
+		Member findMember = memberRepository.findById(1L).orElseThrow(() -> new MemberNotFoundException());
+
+		// List<Notice> notices = findMember.getNotices();
+		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
+	}
+
+	@Test
+	@DisplayName("N + 1 테스트 (fetch join)")
+	void testFetch() {
+
+		Member findMember = memberRepository.findMemberByIdWithCriteria(1L)
+			.orElseThrow(() -> new MemberNotFoundException());
+
+		findMember.getNotices().forEach(n -> log.info("notice={}", n));
+
+		// assertEquals(4, findMember.getNotices().size());
+
+		// List<Notice> notices = findMember.getNotices();
+		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
+	}
+
+	@Test
 	@DisplayName("회원 검색")
 	void testFindMemberById() {
 		Member findMember = memberRepository.findById(1L).orElseThrow(() -> new MemberNotFoundException());
 
 		List<Notice> notices = findMember.getNotices();
+		notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
+
 		assertEquals(4, notices.size());
 		assertNotice(notices.get(0), "K뱅크 규제시스템 담당자 채용",
 			"https://kbank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=109399", findMember);
