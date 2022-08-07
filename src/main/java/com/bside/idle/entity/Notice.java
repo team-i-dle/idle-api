@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString(exclude = {"member", "noticeCriteria"})
+@ToString(exclude = {"member"})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -38,24 +38,15 @@ public class Notice extends BaseEntity {
 	private String title;
 	private String url;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
 	private List<NoticeCriteria> noticeCriteria = new ArrayList<>();
 
-	public void addNoticeCriteria(NoticeCriteria noticeCriteria){
+	public void addNoticeCriteria(NoticeCriteria noticeCriteria) {
 		this.noticeCriteria.add(noticeCriteria);
 		noticeCriteria.setNotice(this);
-	}
-
-	public static Notice createNotice(String title, String url, Member member, List<NoticeCriteria> noticeCriteria) {
-		Notice notice = new Notice();
-		notice.setTitle(title);
-		notice.setUrl(url);
-		notice.setMember(member);
-		noticeCriteria.forEach(notice::addNoticeCriteria);
-		return notice;
 	}
 }
