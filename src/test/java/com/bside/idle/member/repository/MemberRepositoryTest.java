@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.h2.engine.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class MemberRepositoryTest {
 
 	@BeforeEach
 	void setUp() {
-		member = new Member(null, "idle@naver.com", "idle", new ArrayList<>(), new ArrayList<>());
+		member = new Member(null, "idle@naver.com", "idle", null, new ArrayList<>(), new ArrayList<>());
 		notices = List.of(
 			new Notice(null, "공고1", "url1", null, null),
 			new Notice(null, "공고2", "url2", null, null),
