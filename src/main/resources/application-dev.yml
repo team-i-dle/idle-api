@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost/idle?serverTimezone=UTC
-    username: idle
-    password: idle
+    url: ENC(FfX84xzD+d93b4iHcjaq9FEDRHNNnMlCO5nYNz1xzjjl89PaEac8qZcfsnw8qO/uVUgJsc9dYKqwrLSHW1oAulo61lNNv/ORSuPn4ev3DSI=)
+    username: ENC(D5tCUjLZvMGOv9SGteB2QQ==)
+    password: ENC(tdUqbF2bAUefmPCQlwmSli9bLjtheWZf)
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -13,3 +13,7 @@ spring:
         default_batch_fetch_size: 100
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
