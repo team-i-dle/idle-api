@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   datasource:
     url: ENC(FfX84xzD+d93b4iHcjaq9FEDRHNNnMlCO5nYNz1xzjjl89PaEac8qZcfsnw8qO/uVUgJsc9dYKqwrLSHW1oAulo61lNNv/ORSuPn4ev3DSI=)
