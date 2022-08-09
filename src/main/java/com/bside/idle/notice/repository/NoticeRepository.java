@@ -12,7 +12,7 @@ import com.bside.idle.entity.Notice;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-	@Query("select distinct n from Notice n join fetch n.noticeCriteria where n.id = :noticeId")
+	@Query("select distinct n from Notice n join fetch n.noticeCriteriaList where n.id = :noticeId")
 	Optional<Notice> findByIdWithCriteria(@Param("noticeId") Long noticeId);
 
 	boolean existsByMemberAndTitle(Member member, String title);
