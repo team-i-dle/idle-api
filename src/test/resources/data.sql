@@ -14,22 +14,22 @@ insert into members(nick_name, email, created_date, last_modified_date)
 values ('김연경', 'kimyunkyung@idle.com', now(), now());
 
 
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('(회사)성장 가능성', 6, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('산업군', 2, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('연봉', 1, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('네임밸류', 5, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('위치(거리)', 3, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('워라밸', 4, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('복지', 8, 1, now(), now());
-insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)
-values ('사내문화', 7, 1, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('(회사)성장 가능성', 6, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('산업군', 2, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('연봉', 1, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('네임밸류', 5, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('위치(거리)', 3, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('워라밸', 4, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('복지', 8, 1, 0, now(), now());
+insert into member_criteria (criteria_name, weight, member_id, used, created_date, last_modified_date)
+values ('사내문화', 7, 1, 0, now(), now());
 
 
 insert into member_criteria (criteria_name, weight, member_id, created_date, last_modified_date)

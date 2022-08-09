@@ -1,6 +1,11 @@
 package com.bside.idle.notice.controller;
 
-import org.modelmapper.ModelMapper;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bside.idle.common.ApiResponse;
 import com.bside.idle.common.ErrorResponse;
+import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.entity.Notice;
 import com.bside.idle.member.exception.MemberNotFoundException;
+import com.bside.idle.member.service.MemberService;
+import com.bside.idle.membercriteria.service.MemberCriteriaService;
 import com.bside.idle.notice.dto.request.NoticeRegisterRequest;
 import com.bside.idle.notice.dto.response.NoticeRegisterResponse;
 import com.bside.idle.notice.dto.response.NoticeSearchResponse;
@@ -34,8 +42,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/notice")
 public class NoticeController {
 
+	private final MemberService memberService;
 	private final NoticeService noticeService;
-	private final ModelMapper modelMapper;
+	private final MemberCriteriaService memberCriteriaService;
 
 	@ExceptionHandler(MemberNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
@@ -60,7 +69,17 @@ public class NoticeController {
 		@RequestParam("memberId") Long memberId,
 		@RequestBody NoticeRegisterRequest noticeRequest) {
 
-		Notice notice = NoticeRegisterRequest.from(noticeRequest);
+		List<Long> memberCriteriaIds = noticeRequest.getNoticeCriteria()
+			.stream()
+			.map(noticeCriteriaRequest -> noticeCriteriaRequest.getMemberCriteriaId())
+			.collect(Collectors.toList());
+
+		Map<Long, MemberCriteria> memberCriteriaMap = memberCriteriaService.getMemberCriteriaList(memberCriteriaIds)
+			.stream()
+			.collect(Collectors.toMap(MemberCriteria::getId, Function.identity()));
+
+		Notice notice = NoticeRegisterRequest.from(noticeRequest, memberCriteriaMap);
+		log.info("notice={}", notice);
 		Notice registeredNotice = noticeService.register(memberId, notice);
 
 		NoticeRegisterResponse noticeResponse = NoticeRegisterResponse.from(registeredNotice);
@@ -78,6 +97,12 @@ public class NoticeController {
 	public ResponseEntity<ApiResponse<String>> deleteNotice(@PathVariable("noticeId") Long noticeId) {
 		noticeService.deleteNotice(noticeId);
 		return ResponseEntity.ok(ApiResponse.createSuccess("(" + noticeId + ") 삭제 완료 "));
+	}
+
+	@GetMapping("/title")
+	public String getTitle(@RequestParam("url") @URL(protocol = "https") String url) {
+		log.info("url={}", url);
+		return null;
 	}
 
 }

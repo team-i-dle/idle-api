@@ -25,7 +25,7 @@ public class NoticeRegisterResponse {
 		noticeResponse.setId(notice.getId());
 		noticeResponse.setTitle(notice.getTitle());
 		noticeResponse.setUrl(notice.getUrl());
-		notice.getNoticeCriteria()
+		notice.getNoticeCriteriaList()
 			.forEach(nc -> noticeResponse.getNoticeCriteria().add(NoticeCriteriaResponse.from(nc)));
 		return noticeResponse;
 	}

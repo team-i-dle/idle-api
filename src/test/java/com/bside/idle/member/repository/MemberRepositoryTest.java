@@ -10,7 +10,6 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.h2.engine.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bside.idle.entity.Member;
 import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.entity.Notice;
+import com.bside.idle.entity.NoticeCriteria;
 import com.bside.idle.member.exception.MemberNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,36 +49,12 @@ class MemberRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("N + 1 테스트")
-	void test1() {
-		Member findMember = memberRepository.findById(1L).orElseThrow(() -> new MemberNotFoundException());
-
-		// List<Notice> notices = findMember.getNotices();
-		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
-	}
-
-	@Test
-	@DisplayName("N + 1 테스트 (fetch join)")
-	void testFetch() {
-
-		Member findMember = memberRepository.findMemberByIdWithCriteria(1L)
-			.orElseThrow(() -> new MemberNotFoundException());
-
-		findMember.getNotices().forEach(n -> log.info("notice={}", n));
-
-		// assertEquals(4, findMember.getNotices().size());
-
-		// List<Notice> notices = findMember.getNotices();
-		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
-	}
-
-	@Test
 	@DisplayName("회원 검색")
 	void testFindMemberById() {
-		Member findMember = memberRepository.findById(1L).orElseThrow(() -> new MemberNotFoundException());
+		Member findMember = memberRepository.findById(1L).orElseThrow(MemberNotFoundException::new);
 
-		List<Notice> notices = findMember.getNotices();
-		notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
+		List<Notice> notices = findMember.getNoticeList();
+		notices.forEach(n -> n.getNoticeCriteriaList().forEach(NoticeCriteria::getCriteriaName));
 
 		assertEquals(4, notices.size());
 		assertNotice(notices.get(0), "K뱅크 규제시스템 담당자 채용",
@@ -108,9 +84,7 @@ class MemberRepositoryTest {
 	@DisplayName("회원 기본 정보만 저장")
 	void testSaveMember() {
 
-		// assertEquals(0, memberRepository.count());
 		Member savedMember = memberRepository.save(member);
-		// assertEquals(1, memberRepository.count());
 
 		Long memberId = savedMember.getId();
 		Optional<Member> findMember = memberRepository.findById(memberId);
@@ -123,7 +97,7 @@ class MemberRepositoryTest {
 	@DisplayName("존재하지 않는 회원 검색")
 	void testNotFoundMember() {
 		Optional<Member> findMember = memberRepository.findById(1L);
-		assertThrows(NoSuchElementException.class, () -> findMember.get());
+		assertThrows(NoSuchElementException.class, findMember::get);
 	}
 
 	@Test
@@ -139,7 +113,7 @@ class MemberRepositoryTest {
 		Long memberId = savedMember.getId();
 		Member findMember = memberRepository.findById(memberId).get();
 
-		List<Notice> memberNotices = findMember.getNotices();
+		List<Notice> memberNotices = findMember.getNoticeList();
 		assertEquals(notices.size(), memberNotices.size());
 
 		log.info("member={}", findMember);

@@ -45,16 +45,15 @@ public class Member extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-	private List<Notice> notices = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Notice> noticeList = new ArrayList<>();
 
 	@OrderBy("weight ASC")
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<MemberCriteria> memberCriteria = new ArrayList<>();
 
 	public Member update(String nickName) {
 		this.nickName = nickName;
-
 		return this;
 	}
 
@@ -63,7 +62,7 @@ public class Member extends BaseEntity {
 	}
 
 	public void addNotice(Notice notice) {
-		this.notices.add(notice);
+		noticeList.add(notice);
 		notice.setMember(this);
 	}
 

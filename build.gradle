@@ -28,6 +28,8 @@ dependencies {
 //	implementation 'org.springframework.session:spring-session-jdbc'
 	implementation 'org.modelmapper.extensions:modelmapper-gson:3.1.0'
 
+	implementation 'org.jsoup:jsoup:1.15.2'
+
 	compileOnly 'org.projectlombok:lombok'
 	testCompileOnly 'org.projectlombok:lombok'
 

@@ -43,10 +43,10 @@ public class Notice extends BaseEntity {
 	private Member member;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "notice", cascade = CascadeType.ALL)
-	private List<NoticeCriteria> noticeCriteria = new ArrayList<>();
+	private List<NoticeCriteria> noticeCriteriaList = new ArrayList<>();
 
 	public void addNoticeCriteria(NoticeCriteria noticeCriteria) {
-		this.noticeCriteria.add(noticeCriteria);
+		noticeCriteriaList.add(noticeCriteria);
 		noticeCriteria.setNotice(this);
 	}
 }
