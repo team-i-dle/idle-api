@@ -41,7 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/notice")
-@CrossOrigin(origins="*", allowedHeaders = "*")
 public class NoticeController {
 
 	private final MemberService memberService;

@@ -36,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
 
 	private final MemberService memberService;
