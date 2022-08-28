@@ -1,5 +1,7 @@
 package com.bside.idle.member.controller;
 
+import static java.util.Comparator.*;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +10,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import com.bside.idle.common.ApiResponse;
 import com.bside.idle.common.ErrorResponse;
 import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.entity.Notice;
+import com.bside.idle.entity.NoticeCriteria;
 import com.bside.idle.member.dto.request.MemberKeywordModifyRequest;
 import com.bside.idle.member.dto.request.MemberKeywordModifyRequest.MemberKeywordRequest;
 import com.bside.idle.member.dto.response.MemberKeywordResponse;
@@ -33,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController {
 
 	private final MemberService memberService;
@@ -73,8 +77,8 @@ public class MemberController {
 		List<Notice> notices = memberService.listNotice(memberId);
 
 		notices.forEach(n -> {
-			n.getMember().getMemberCriteria().forEach(mc -> mc.getCriteriaName());
-			n.getNoticeCriteriaList().forEach(nc -> nc.getCriteriaName());
+			n.getMember().getMemberCriteria().forEach(MemberCriteria::getCriteriaName);
+			n.getNoticeCriteriaList().forEach(NoticeCriteria::getCriteriaName);
 		});
 
 		ApiResponse<String> body = ApiResponse.createSuccess("개발중");
@@ -83,8 +87,8 @@ public class MemberController {
 
 	private List<MemberKeywordResponse> getMemberKeywordResponses(List<MemberCriteria> memberCriteriaList) {
 		List<MemberKeywordResponse> response = memberCriteriaList.stream()
-			.sorted(Comparator.comparingLong(MemberCriteria::getWeight))
-			.map(memberCriteria -> MemberKeywordResponse.from(memberCriteria))
+			.sorted(comparingLong(MemberCriteria::getWeight))
+			.map(MemberKeywordResponse::from)
 			.collect(Collectors.toList());
 		return response;
 	}
