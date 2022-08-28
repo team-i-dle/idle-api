@@ -96,7 +96,7 @@ class MemberRepositoryTest {
 	@Test
 	@DisplayName("존재하지 않는 회원 검색")
 	void testNotFoundMember() {
-		Optional<Member> findMember = memberRepository.findById(1L);
+		Optional<Member> findMember = memberRepository.findById(10L);
 		assertThrows(NoSuchElementException.class, findMember::get);
 	}
 

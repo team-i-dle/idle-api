@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/notice")
+@CrossOrigin(origins="*", allowedHeaders = "*")
 public class NoticeController {
 
 	private final MemberService memberService;
@@ -71,7 +73,7 @@ public class NoticeController {
 
 		List<Long> memberCriteriaIds = noticeRequest.getNoticeCriteria()
 			.stream()
-			.map(noticeCriteriaRequest -> noticeCriteriaRequest.getMemberCriteriaId())
+			.map(NoticeRegisterRequest.NoticeCriteriaRequest::getMemberCriteriaId)
 			.collect(Collectors.toList());
 
 		Map<Long, MemberCriteria> memberCriteriaMap = memberCriteriaService.getMemberCriteriaList(memberCriteriaIds)
