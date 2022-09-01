@@ -21,7 +21,7 @@ public class IndexController {
         SessionMember member = (SessionMember) httpSession.getAttribute("member");
 
         if (member != null) {
-            model.addAttribute("userName", member.getNickName());
+            model.addAttribute("userName", "LoginSuccess!!");
         }
 
         return "index";
