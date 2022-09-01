@@ -3,6 +3,7 @@ package com.bside.idle.auth;
 import com.bside.idle.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .email((String) attributesAccount.get("email").toString())
                 .nickName((String) attributesProfile.get("nickname").toString())
-                .attributes(attributesAccount)
+                .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }

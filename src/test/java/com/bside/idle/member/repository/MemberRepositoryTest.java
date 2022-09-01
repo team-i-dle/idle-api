@@ -10,7 +10,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.h2.engine.Role;
+//import org.h2.engine.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,20 +57,20 @@ class MemberRepositoryTest {
 		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
 	}
 
-	@Test
-	@DisplayName("N + 1 테스트 (fetch join)")
-	void testFetch() {
-
-		Member findMember = memberRepository.findMemberByIdWithCriteria(1L)
-			.orElseThrow(() -> new MemberNotFoundException());
-
-		findMember.getNotices().forEach(n -> log.info("notice={}", n));
-
-		// assertEquals(4, findMember.getNotices().size());
-
-		// List<Notice> notices = findMember.getNotices();
-		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
-	}
+//	@Test
+//	@DisplayName("N + 1 테스트 (fetch join)")
+//	void testFetch() {
+//
+//		Member findMember = memberRepository.findMemberByIdWithCriteria(1L)
+//			.orElseThrow(() -> new MemberNotFoundException());
+//
+//		findMember.getNotices().forEach(n -> log.info("notice={}", n));
+//
+//		// assertEquals(4, findMember.getNotices().size());
+//
+//		// List<Notice> notices = findMember.getNotices();
+//		// notices.forEach(n -> n.getNoticeCriteria().forEach(nc -> nc.getCriteriaName()));
+//	}
 
 	@Test
 	@DisplayName("회원 검색")
@@ -126,27 +126,27 @@ class MemberRepositoryTest {
 		assertThrows(NoSuchElementException.class, () -> findMember.get());
 	}
 
-	@Test
-	@DisplayName("회원 저장시 채용공고 저장 확인")
-	void testSaveMemberWithNotice() {
-
-		member.addNotices(notices);
-		Member savedMember = memberRepository.save(member);
-
-		memberRepository.flush();
-		em.clear();
-
-		Long memberId = savedMember.getId();
-		Member findMember = memberRepository.findById(memberId).get();
-
-		List<Notice> memberNotices = findMember.getNotices();
-		assertEquals(notices.size(), memberNotices.size());
-
-		log.info("member={}", findMember);
-		assertNotice(memberNotices.get(0), "공고1", "url1", member);
-		assertNotice(memberNotices.get(1), "공고2", "url2", member);
-		assertNotice(memberNotices.get(2), "공고3", "url3", member);
-	}
+//	@Test
+//	@DisplayName("회원 저장시 채용공고 저장 확인")
+//	void testSaveMemberWithNotice() {
+//
+//		member.addNotices(notices);
+//		Member savedMember = memberRepository.save(member);
+//
+//		memberRepository.flush();
+//		em.clear();
+//
+//		Long memberId = savedMember.getId();
+//		Member findMember = memberRepository.findById(memberId).get();
+//
+//		List<Notice> memberNotices = findMember.getNotices();
+//		assertEquals(notices.size(), memberNotices.size());
+//
+//		log.info("member={}", findMember);
+//		assertNotice(memberNotices.get(0), "공고1", "url1", member);
+//		assertNotice(memberNotices.get(1), "공고2", "url2", member);
+//		assertNotice(memberNotices.get(2), "공고3", "url3", member);
+//	}
 
 	private void assertNotice(Notice notice, String title, String url, Member member) {
 		assertEquals(title, notice.getTitle());

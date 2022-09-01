@@ -17,7 +17,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
-public class CustomOAuth2MemberService implements OAuth2UserService {
+public class CustomOAuth2MemberService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
@@ -27,10 +27,8 @@ public class CustomOAuth2MemberService implements OAuth2UserService {
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration()
-                .getProviderDetails()
-                .getUserInfoEndpoint()
-                .getUserNameAttributeName();
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
+                                                    .getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
@@ -39,8 +37,8 @@ public class CustomOAuth2MemberService implements OAuth2UserService {
         httpSession.setAttribute("member", new SessionMember(member));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey());
+                                                                                                attributes.getAttributes(),
+                                                                                                attributes.getNameAttributeKey());
     }
 
     private Member saveOrUpdate(OAuthAttributes attributes) {
