@@ -9,6 +9,18 @@ spring:
     show_sql: true
   session:
     store-type: jdbc
+    jdbc:
+      initialize-schema: always
   profiles:
-    include: oauth
+    include: local, oauth
+
+  # Test OAuth
+
+  oauth2:
+    client:
+      registration:
+        kakao:
+          client-id: test
+          client-secret: test
+          scope: profile, email
 

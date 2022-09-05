@@ -4,22 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.bside.idle.auth.Role;
+import lombok.*;
 
 @ToString
 @Setter
@@ -48,16 +36,6 @@ public class Member extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
 	private List<MemberCriteria> memberCriteria = new ArrayList<>();
 
-	public Member update(String nickName) {
-		this.nickName = nickName;
-
-		return this;
-	}
-
-	public String getRoleKey() {
-		return this.role.getKey();
-	}
-
 	public void addNotice(Notice notice) {
 		this.notices.add(notice);
 		notice.setMember(this);
@@ -70,9 +48,19 @@ public class Member extends BaseEntity {
 	}
 
 	@Builder
-	public Member(String email, String nickName, Role role) {
-		this.email = email;
+	public Member(String nickName, String email, Role role) {
 		this.nickName = nickName;
+		this.email = email;
 		this.role = role;
+	}
+
+	public Member update(String nickName) {
+		this.nickName = nickName;
+
+		return this;
+	}
+
+	public String getRoleKey() {
+		return this.role.getKey();
 	}
 }
