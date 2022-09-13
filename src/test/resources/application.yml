@@ -15,6 +15,15 @@ spring:
     password: idle
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test
+            client-secret: test
+            scope: profile, email
+
   sql:
     init:
       mode: ALWAYS

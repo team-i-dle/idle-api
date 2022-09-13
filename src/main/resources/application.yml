@@ -13,14 +13,3 @@ spring:
       initialize-schema: always
   profiles:
     include: local, oauth
-
-  # Test OAuth
-
-  oauth2:
-    client:
-      registration:
-        kakao:
-          client-id: test
-          client-secret: test
-          scope: profile, email
-
