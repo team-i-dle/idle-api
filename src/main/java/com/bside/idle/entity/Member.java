@@ -23,6 +23,7 @@ public class Member extends BaseEntity {
 	@Column(name = "member_id")
 	private Long id;
 
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	private String nickName;
 

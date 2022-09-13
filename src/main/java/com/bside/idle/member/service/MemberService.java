@@ -26,7 +26,7 @@ public class MemberService {
 	public List<String> getKeywordList(Long memberId) {
 		Member member = memberRepository
 			.findMemberByIdWithCriteria(memberId)
-			.orElseThrow(() -> new MemberNotFoundException("멤버 ID(" + memberId + ")는 존재하지 않습니다."));
+			.orElseThrow(() -> new MemberNotFoundException("멤버 ID( " + memberId + " )는 존재하지 않습니다."));
 
 		return member.getMemberCriteria()
 			.stream()
