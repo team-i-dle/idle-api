@@ -3,6 +3,7 @@ package com.bside.idle.notice.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.bside.idle.notice.dto.response.NoticeListItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -13,12 +13,14 @@ import lombok.Setter;
 public class NoticeRegisterRequest {
 	private String title;
 	private String url;
+	private Integer salary;
 	private List<NoticeCriteriaRequest> noticeCriteria;
 
 	public static Notice from(NoticeRegisterRequest noticeRequest) {
 		Notice notice = new Notice();
 		notice.setTitle(noticeRequest.getTitle());
 		notice.setUrl(noticeRequest.getUrl());
+		notice.setSalary(noticeRequest.getSalary());
 		noticeRequest.getNoticeCriteria()
 			.forEach(noticeCriteriaRequest -> notice.addNoticeCriteria(
 				NoticeCriteriaRequest.from(noticeCriteriaRequest)));

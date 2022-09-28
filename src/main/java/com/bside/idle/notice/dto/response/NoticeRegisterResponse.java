@@ -18,6 +18,7 @@ public class NoticeRegisterResponse {
 	private Long id;
 	private String title;
 	private String url;
+	private Integer salary;
 	private List<NoticeCriteriaResponse> noticeCriteria = new ArrayList<>();
 
 	public static NoticeRegisterResponse from(Notice notice) {
@@ -25,6 +26,7 @@ public class NoticeRegisterResponse {
 		noticeResponse.setId(notice.getId());
 		noticeResponse.setTitle(notice.getTitle());
 		noticeResponse.setUrl(notice.getUrl());
+		noticeResponse.setSalary(notice.getSalary());
 		notice.getNoticeCriteria()
 			.forEach(nc -> noticeResponse.getNoticeCriteria().add(NoticeCriteriaResponse.from(nc)));
 		return noticeResponse;
