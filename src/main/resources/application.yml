@@ -12,4 +12,4 @@ spring:
     jdbc:
       initialize-schema: always
   profiles:
-    include: real, oauth
+    include: dev, oauth
