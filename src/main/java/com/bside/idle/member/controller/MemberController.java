@@ -2,6 +2,8 @@ package com.bside.idle.member.controller;
 
 import java.util.List;
 
+import com.bside.idle.notice.dto.response.MemberCriteriaResponse;
+import com.bside.idle.notice.dto.response.NoticeListItem;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,10 +35,10 @@ public class MemberController {
 	}
 
 	@GetMapping("/{memberId}/keyword")
-	public ResponseEntity<ApiResponse<List<String>>> getKeywordList(@PathVariable("memberId") Long memberId) {
-		List<String> criteria = memberService.getKeywordList(memberId);
-		ApiResponse<List<String>> body = ApiResponse.createSuccess(criteria);
-		return ResponseEntity.ok(body);
+	public ResponseEntity<ApiResponse<List<MemberCriteriaResponse>>> getKeywordList(@PathVariable("memberId") Long memberId) {
+
+		List<MemberCriteriaResponse> keywordList = memberService.getKeywordList(memberId);
+		return ResponseEntity.ok(ApiResponse.createSuccess(keywordList));
 	}
 
 	@GetMapping("/{memberId}/notice")
@@ -52,5 +54,6 @@ public class MemberController {
 		ApiResponse<String> body = ApiResponse.createSuccess("개발중");
 		return ResponseEntity.ok(body);
 	}
+
 
 }

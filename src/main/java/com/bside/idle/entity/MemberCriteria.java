@@ -1,14 +1,9 @@
 package com.bside.idle.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.bside.idle.notice.dto.response.MemberCriteriaResponse;
+import com.bside.idle.notice.dto.response.NoticeListItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +17,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "member_criteria")
+@SqlResultSetMapping(
+		name="MemberCriteriaMapping",
+		classes = @ConstructorResult(
+				targetClass = MemberCriteriaResponse.class,
+				columns = {
+						@ColumnResult(name="member_criteria_id", type = Long.class),
+						@ColumnResult(name="criteria_name", type = String.class),
+						@ColumnResult(name="weight", type = Long.class),
+				})
+)
 public class MemberCriteria extends BaseEntity {
 
 	@Id

@@ -52,15 +52,15 @@ public class NoticeService {
 
 	@Transactional(readOnly = true)
 	public List<NoticeListItem> searchNoticeList(Long memberId) {
-		String q = "select n.notice_id, n.title, n.url, n.salary "
+		String q = "select n.notice_id, n.title, n.url, max(n.salary) as salary, sum((1 + (mc.weight * 0.1)) * nc.score) as total_score "
 				+ "from notice n "
 				+ "inner join members m on m.member_id = n.member_id "
 				+ "inner join notice_criteria nc on nc.notice_id = n.notice_id "
 				+ "inner join member_criteria mc on mc.member_id = m.member_id "
 				+ "where mc.criteria_name = nc.criteria_name "
 				+ "and n.member_id = ? "
-				+ "group by n.title, n.url "
-				+ "order by sum((1 + (mc.weight * 0.1)) * nc.score) desc";
+				+ "group by n.notice_id, n.title, n.url "
+				+ "order by total_score desc";
 
 		Query query = em.createNativeQuery(q, "ListItemMapping");
 		query.setParameter(1, memberId);
