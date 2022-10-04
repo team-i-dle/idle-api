@@ -60,8 +60,8 @@
 --values ('복지', 8, 1, now(), now());
 --
 --
---insert notice(title, url, member_id, created_date, last_modified_date)
---values ('K뱅크 규제시스템 담당자 채용', 'https://kbank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=109399',
+--insert notice(title, url, salary, member_id, created_date, last_modified_date)
+--values ('K뱅크 규제시스템 담당자 채용', 'https://kbank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=109399', 4200,
 --        1, now(), now());
 --
 --insert notice_criteria(criteria_name, description, score, notice_id, created_date, last_modified_date)
@@ -89,8 +89,8 @@
 --values ('복지', '하나도없음', 1, 1, now(), now());
 --
 --
---insert notice(title, url, member_id, created_date, last_modified_date)
---values ('[신한은행] App서비스 기획/운영 경력직 채용', 'https://shinhan.recruiter.co.kr/appsite/company/index', 1, now(), now());
+--insert notice(title, url, salary, member_id, created_date, last_modified_date)
+--values ('[신한은행] App서비스 기획/운영 경력직 채용', 'https://shinhan.recruiter.co.kr/appsite/company/index', 6500, 1, now(), now());
 --
 --insert notice_criteria(criteria_name, description, score, notice_id, created_date, last_modified_date)
 --values ('연봉', '6500', 3, 2, now(), now());
@@ -116,8 +116,8 @@
 --insert notice_criteria(criteria_name, description, score, notice_id, created_date, last_modified_date)
 --values ('복지', '은근 많음', 2, 2, now(), now());
 --
---insert notice(title, url, member_id, created_date, last_modified_date)
---values ('(주)아이엠비씨 직원 채용 공고', 'https://www.imbc.com/notice/notice_2018/3671051_75022.html', 1, now(), now());
+--insert notice(title, url, salary, member_id, created_date, last_modified_date)
+--values ('(주)아이엠비씨 직원 채용 공고', 'https://www.imbc.com/notice/notice_2018/3671051_75022.html', 4500, 1, now(), now());
 --
 --insert notice_criteria(criteria_name, description, score, notice_id, created_date, last_modified_date)
 --values ('연봉', '4500', 1, 3, now(), now());
@@ -142,4 +142,4 @@
 --
 --insert notice_criteria(criteria_name, description, score, notice_id, created_date, last_modified_date)
 --values ('복지', '없다', 1, 3, now(), now());
---
+

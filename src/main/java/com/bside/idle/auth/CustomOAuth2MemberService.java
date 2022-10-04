@@ -1,7 +1,10 @@
 package com.bside.idle.auth;
 
+import com.bside.idle.entity.DefaultCriteria;
 import com.bside.idle.entity.Member;
+import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.member.repository.MemberRepository;
+import com.bside.idle.notice.repository.MemberCriteriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -14,11 +17,13 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2MemberService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final MemberRepository memberRepository;
+    private final MemberCriteriaRepository memberCriteriaRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -34,6 +39,25 @@ public class CustomOAuth2MemberService implements OAuth2UserService<OAuth2UserRe
 
         Member member = saveOrUpdate(attributes);
 
+        Member memberByIdWithCriteria = memberRepository
+                .findMemberByIdWithCriteria(member.getId())
+                .orElse(null);
+
+        if (memberByIdWithCriteria == null) {
+            List<DefaultCriteria> defaultCriteriaList = memberRepository.findDefaultCriteria();
+
+            for (int i = 0; i < defaultCriteriaList.size(); i++) {
+                DefaultCriteria item = defaultCriteriaList.get(i);
+
+                MemberCriteria memberCriteria = new MemberCriteria();
+                memberCriteria.setCriteriaName(item.getCriteriaName());
+                memberCriteria.setWeight((long) (i + 1));
+                memberCriteria.setMember(member);
+
+                memberCriteriaRepository.save(memberCriteria);
+            }
+        }
+
         httpSession.setAttribute("member", new SessionMember(member));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
@@ -43,8 +67,8 @@ public class CustomOAuth2MemberService implements OAuth2UserService<OAuth2UserRe
 
     private Member saveOrUpdate(OAuthAttributes attributes) {
         Member member = memberRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getNickName()))
                 .orElse(attributes.toEntity());
+
 
         return memberRepository.save(member);
     }

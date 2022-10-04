@@ -28,6 +28,7 @@ import lombok.ToString;
 						@ColumnResult(name="title", type = String.class),
 						@ColumnResult(name="url", type = String.class),
 						@ColumnResult(name="salary", type = Integer.class),
+						@ColumnResult(name="total_score", type = Double.class),
 				})
 )
 public class Notice extends BaseEntity {
