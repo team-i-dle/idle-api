@@ -4,7 +4,7 @@ import com.bside.idle.entity.DefaultCriteria;
 import com.bside.idle.entity.Member;
 import com.bside.idle.entity.MemberCriteria;
 import com.bside.idle.member.repository.MemberRepository;
-import com.bside.idle.notice.repository.MemberCriteriaRepository;
+import com.bside.idle.member.repository.MemberCriteriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
