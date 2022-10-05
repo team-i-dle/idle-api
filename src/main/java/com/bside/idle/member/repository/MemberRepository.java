@@ -13,6 +13,8 @@ import com.bside.idle.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    Optional<Member> findById(Long memberId);
+
     Optional<Member> findByEmail(String email);
 
     @Query("select m from Member m "

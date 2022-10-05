@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import com.bside.idle.notice.dto.response.MemberCriteriaResponse;
 import com.bside.idle.notice.dto.response.NoticeListItem;
@@ -32,6 +33,12 @@ public class MemberService {
 
 	@PersistenceContext
 	EntityManager em;
+
+	@Transactional(readOnly = true)
+	public Member getMemberInfo(Long memberId) {
+		return memberRepository.findById(memberId)
+				.orElseThrow(() -> new MemberNotFoundException("멤버 ID(" + memberId + ")는 존재하지 않습니다."));
+	}
 
 	@Transactional(readOnly = true)
 	public List<MemberCriteriaResponse> getKeywordList(Long memberId) {
